@@ -15,7 +15,6 @@ API_URL  =  'http://192.168.1.133:8080/ov-connect-webService-userscn-olddb/resou
       .subscribe(
         data => {
           console.log('POST Request is successful ', data );
-          console.log(this.responseCode);
         },
         (err: HttpErrorResponse) => {
                   if (err.error instanceof Error) {

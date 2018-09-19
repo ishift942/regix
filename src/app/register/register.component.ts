@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit {
   states: State[];
   private btnDisable: boolean = true;
   modalRef: BsModalRef;
+  whithoutSpace: number;
   constructor(private _dataService: DataServiceService,
               private formBuilder: FormBuilder,
               private userService: UserService,
@@ -90,7 +91,7 @@ addForm: FormGroup;
       "fName": "Ahmed",
       "lName": "Rashwan",
       "city": "",
-      "zipCode": "",
+      "zipCode": 0,
       "leadRefRepName": "",
       "usersCNLeadSourceEnumId": 26000,
       "leadSourceDesc": "",
@@ -129,6 +130,7 @@ addForm: FormGroup;
   ]
 };
   onSubmit() {
+    // let expirationDate = this.addForm.value.creditCardExpMonth +  this.addForm.value.creditCardExpYear;
     this.user.requestType = "ADD";
     this.user.userId= -1;
     this.user.loginToken= "";
@@ -144,24 +146,29 @@ addForm: FormGroup;
     this.user.services[0].leadSourceDesc = this.addForm.value.clientFromDetails;
     this.user.services[0].userCNAdresses[0].addressLine1 = this.addForm.value.mainAddress;
     this.user.services[0].userCNAdresses[0].addressLine2 = this.addForm.value.altAddress;
-    this.user.services[0].userCNEmails[0].emailEnumId = 1000 ;
+    this.user.services[0].userCNEmails[0].emailEnumId = 10001 ;
     this.user.services[0].userCNEmails[0].email = this.addForm.value.email ;
     this.user.services[0].userCNTelecoms[0].telecomEnumId = 11000;
     this.user.services[0].userCNTelecoms[0].telecom = this.addForm.value.primaryTelephone;
-    this.user.services[0].countryEnumId = this.addForm.value.country;;
+    this.user.services[0].countryEnumId = this.addForm.value.country;
     this.user.services[0].userCNAdresses[0].usersCNAdressesEnumId = this.addForm.value.mainAddressType;
     console.log("Create User ::",this.user);
      if(this.creditCard = false){
       this.user.services[0].userCNCreditCards[0].creditCard = "1000";
-      this.user.services[0].userCNCreditCards[0].creditCardTimeExp = "0" ;
-      this.user.services[0].userCNCreditCards[0].creditCardEnumId = "0";
+      this.user.services[0].userCNCreditCards[0].creditCardTimeExp = 0 ;
+      this.user.services[0].userCNCreditCards[0].creditCardEnumId = 0;
       this.addForm.value.creditCardExp = 0;
-      this.addForm.value.creditCard ="0" ;
+      this.addForm.value.creditCard = null ;
       this.addForm.value.creditCardTimeExp = 0 ;}
+    this.addForm.value.creditCardExp = this.addForm.value.creditCardExp;
+    this.whithoutSpace = this.addForm.value.creditCardExp.replace(/[&\/\\#,+()$~%.'":*?<>{}]+[ \t]+[ /t]+|[ /t]/g,'');
+    // this.whithoutSpace = this.addForm.value.creditCardExp.replace(/[&\/\\#,+()$~%.'":*?<>{}]+[ \t]+[ \t]+|[ \t]/g,'');
+
      else  if(this.creditCard = true){
         this.user.services[0].userCNCreditCards[0].creditCard = this.addForm.value.cardNumber;
-        this.user.services[0].userCNCreditCards[0].creditCardTimeExp = this.addForm.value.creditCardExp ;
+        this.user.services[0].userCNCreditCards[0].creditCardTimeExp = this.whithoutSpace;
       }
+console.log("whithout slash",this.whithoutSpace);
       console.log(this.creditCard);
       this.userService.createUser(this.user) => {
         this.addForm.reset();
@@ -242,15 +249,15 @@ addForm: FormGroup;
     if (visaRegEx.test(ccNum)) {
       isValid = true;
       console.log("visaRegEx");
-      this.user.services[0].userCNCreditCards[0].creditCardEnumId = "1100";
+      this.user.services[0].userCNCreditCards[0].creditCardEnumId = 1100;
     } else if(mastercardRegEx.test(ccNum)) {
       isValid = true;
       console.log("mastercardRegEx")
-      this.user.services[0].userCNCreditCards[0].creditCardEnumId = "1200";
+      this.user.services[0].userCNCreditCards[0].creditCardEnumId = 1200;
     } else if(amexpRegEx.test(ccNum)) {
       isValid = true;
       console.log("amexpRegEx");
-      this.user.services[0].userCNCreditCards[0].creditCardEnumId = "1300";
+      this.user.services[0].userCNCreditCards[0].creditCardEnumId = 1300;
     }
   }
   };

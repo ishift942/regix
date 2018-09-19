@@ -91,7 +91,7 @@
                               formControlName="country"
                               name="country"
                               class="form-control">
-                        <option value="0">Country</option>
+                        <option value=0>Country</option>
                         <option *ngFor="let country of countries"
                                 value= {{country.id}}>{{country.name}}
                         </option>
@@ -236,7 +236,7 @@
               </div>
               <div class="col-md-2">
               <div class="input-group-append" [ngClass]="{'invalid':addForm.submitted && formGroup.addForm.cardCvv.errors}">
-                                        <input formControlName="cardCvv" name="cardCvv" placeholder="cvc" class="form-control" type="tel" type="tel" autocomplete="cc-cvc" id="cardCvv" ccCvc>
+                                        <input formControlName="cardCvv" name="cardCvv" placeholder="cvc" class="form-control" type="number"   id="cardCvv" ccCvc>
                                       </div>
             </div>
           </div>
