@@ -1,0 +1,10 @@
+{
+ "/rest": {
+"target": "http://192.168.1.133:8080/ov-connect-webService-userscn-olddb/resources/Users",
+"pathRewrite": {
+  "^/rest": ""
+},
+"secure": false,
+"changeOrigin": true
+}
+}

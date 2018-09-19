@@ -1,0 +1,269 @@
+<div class="shell-register p-5">
+  <div class="container d-flex flex-column container-register h-100 w-100">
+      <form class="form-container pb-5"  [formGroup]="addForm" >
+        <div class="form-logo ">
+          <img class="p-5" src="src/assets/img/3ddx logo.png">
+        </div>
+        <h5  class="text-left">General Information</h5>
+        <div class="row p-1">
+            <div class=" d-flex flex-column">
+              <p class="text-left pl-3 pt-2">Account type</p>
+              <div *ngFor="let validation of account_validation_message.accountType">
+                <small  *ngIf="addForm.get('accountType').hasError(validation.type) && addForm.get('accountType').dirty && addForm.get('accountType').touched">{{validation.message}}</small>
+            </div>
+            </div>
+            <div class="col-md-10 flex-row d-flex justify-content-center">
+                <div class="d-flex flex-row">
+                  <input formControlName="accountType" name="accountType" class="connect-Radio" type="radio" id="doctor"  value="Doctor" [checked]="true" />
+                  <label for="doctor" class="connect-Label"><span>Doctor</span></label>
+
+                  <input formControlName="accountType" name="accountType" class="connect-Radio" type="radio" id="sc"  value="scanning center" checked />
+                  <label for="sc" class="connect-Label"><span>scanning center</span></label>
+                </div>
+              </div>
+
+
+          </div>
+
+
+
+          <div class="row p-1">
+              <div class="col-md-3 d-flex flex-column">
+                  <input formControlName="fName" name="fName" class="form-control " placeholder="Enter your First Name">
+                  <div *ngFor="let validation of account_validation_message.fName">
+                    <small  *ngIf="addForm.get('fName').hasError(validation.type) && addForm.get('fName').dirty && addForm.get('fName').touched">
+                      <p class="validate-shift"><i  aria-hidden="true" class="fa fa-exclamation-triangle"></i>  {{validation.message}}
+                                        </p></small>
+                </div>
+                </div>
+                <div class="col-md-3">
+                  <input formControlName="lName" name="lName" class="form-control" placeholder="Enter your Last Name">
+                </div>
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input formControlName="mainAddress" name="mainAddress" type="text" class="form-control"  placeholder="Enter your Address">
+                      <div class="input-group-append" >
+                        <select class="form-control" formControlName="mainAddressType" name="mainAddressType">
+                          <option class="dropdown-item" value="0">Office</option>
+                          <option class="dropdown-item" value="1">Home</option>
+                        </select>
+                      </div>
+                    </div>
+              </div>
+              <div class="col-md-3">
+                  <input class="form-control" formControlName="password" name="password"  type="password"  placeholder="Enter your password">
+                  <div *ngFor="let validation of account_validation_message.password">
+                    <small  *ngIf="addForm.get('password').hasError(validation.type) && addForm.get('password').dirty && addForm.get('password').touched"><p class="validate-shift"><i  aria-hidden="true" class="fa fa-exclamation-triangle"></i>  {{validation.message}}
+                                        </p></small>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" formControlName="ConfirmPassword" name="ConfirmPassword" type="password" placeholder="Re-Enter your password">
+                    <div *ngFor="let validation of account_validation_message.ConfirmPassword">
+                      <small  *ngIf="addForm.get('ConfirmPassword').hasError(validation.type) && addForm.get('ConfirmPassword').dirty && addForm.get('ConfirmPassword').touched">
+
+                        <p class="validate-shift"><i  aria-hidden="true" class="fa fa-exclamation-triangle"></i>  {{validation.message}}
+                                            </p>
+
+                      </small>
+                    </div>
+                  </div>
+              <div class="col-md-6">
+                  <input formControlName="altAddress" name="altAddress" class="form-control" placeholder="Enter your Alt Address">
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-md-6 d-flex flex-column">
+                  <input  formControlName="email" name="email"  class="form-control" placeholder="Enter your Email">
+                  <div *ngFor="let validation of account_validation_message.email">
+                  <small  *ngIf="addForm.get('email').hasError(validation.type) && addForm.get('email').dirty && addForm.get('email').touched">
+                    <p class="validate-shift"><i  aria-hidden="true" class="fa fa-exclamation-triangle"></i>  {{validation.message}}
+                                        </p></small>
+                </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group-append">
+                        <label class=" text-left p-2">Country</label>
+                      <select
+                              [(ngModel)]="selectedCountry.id"
+                              (change)="onSelect($event.target.value)"
+                              formControlName="country"
+                              name="country"
+                              class="form-control">
+                        <option value="0">Country</option>
+                        <option *ngFor="let country of countries"
+                                value= {{country.id}}>{{country.name}}
+                        </option>
+                      </select>
+                      </div>
+                    </div>
+                  <!---->
+                  <div class="col-md-3">
+                    <div class="input-group-append">
+                      <label id="state" class=" text-left p-2">State</label>
+                      <select
+                              class="form-control"
+                              formControlName="state"
+                              name="state"
+                              >
+                        <option value="0">Select Country first</option>
+                        <option *ngFor="let state of states "
+                                value= {{state.id}}>{{state.name}}
+                        </option>
+                      </select>
+                    </div>
+                    <!---->
+                  </div>
+              </div>
+
+        <div class="row p-1">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input  formControlName="primaryTelephone" name="primaryTelephone" type="number" class="form-control" aria-label="Enter your Primary Telephone number" placeholder="Enter your Primary Telephone number">
+                    <div class="input-group-append">
+                      <select class="form-control" formControlName="primaryTelephoneType" name="primaryTelephoneType">
+                        <option class="dropdown-item" href="#">Office 1</option>
+                        <option class="dropdown-item" href="#">Office 2</option>
+                        <option class="dropdown-item" href="#">cell</option>
+                      </select>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <!---->
+               <input formControlName="city"
+                     type="text"  name="city" class="form-control" placeholder="city">
+
+             </div>
+                 <div class="col-md-3">
+                     <input formControlName="zipCode"
+                            name="zipCode" type="number" class="form-control" placeholder="Zip Code">
+                 </div>
+          </div>
+
+          <div class="row p-1">
+            <div class="col-md-6">
+                <div class="input-group">
+                  <input formControlName="altTelephone" name="altTelephone" type="number" class="form-control" aria-label="Enter your alt Telephone number" placeholder="Enter your Alt Telephone number">
+                  <div class="input-group-append">
+                    <select  formControlName="altTelephoneType" name="altTelephoneType"  class="form-control">
+                      <option class="dropdown-item" href="#">Office 1</option>
+                      <option class="dropdown-item" href="#">Office 2</option>
+                      <option class="dropdown-item" href="#">cell</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="input-group-append">
+                      <label class="p-2">How did you hear<br> about us</label>
+                      <select class="form-control" formControlName="clientFrom"
+                              name="clientFrom">
+                        <option value="1">Sales Contact</option>
+                        <option value="2">Reffered by a scaning center</option>
+                        <option value="3">Reffered by a friend</option>
+                        <option value="4">Web</option>
+                        <option value="5">Advertisment</option>
+                        <option value="6">Other</option>
+                      </select>
+                    </div>
+          </div>
+        <div class="col-md-3">
+                  <input formControlName="repName"
+                         name="repName" type="text" class="form-control" aria-label="" placeholder=" the rep's name">
+          </div>
+
+            </div>
+
+        <div class="row p-1">
+            <div class="col-md-6">
+                <h5  class="text-left ">Billing Information</h5><small style="
+                                                                                  font-size: 10px;
+                                                                                  opacity:  .7;
+                                                                                    ">
+              Submitting your credit card guarantees faster delivery of your cases</small>
+
+      <div class="row p-1">
+                    <div class="col-md-12 d-flex flex-column  align-items-start justify-content-start">
+                      <!--<input  class="ml-3" type="radio" id="null" name="group2">-->
+                      <!--<label>Not specified</label>-->
+                      <!--<input class="ml-3" type="radio" id="Visa" name="group2">-->
+                      <!--<label>Visa</label>-->
+                      <!--<input  class="ml-3" type="radio" id="express" name="group2">-->
+                      <!--<label>American express</label>-->
+
+                      <label class="text-left ">Credit Card Type</label>
+                      <div class="d-flex flex-row">
+                      <input formControlName="creditCardType"
+                             name="creditCardType" class="connect-Radio" type="radio" id="NotSpecified" value=1000
+                             (change)="notSpecified($event)"
+                             />
+                      <label for="NotSpecified" class="connect-Label" ><span class="selected"></span><span>Not specified</span></label>
+
+                      <input formControlName="creditCardType"
+                             name="creditCardType" (change)="specified($event)" class="connect-Radio" type="radio"  id="amex" value=0  />
+                      <label for="amex" class="connect-Label" tooltip="American Express" ><span class="selected"></span><i class="fab fa-cc-amex"></i></label>
+
+                      <input  formControlName="creditCardType"
+                              name="creditCardType" (change)="specified($event)" class="connect-Radio" type="radio"  id="visa" value=1 />
+                      <label for="visa"  class="connect-Label"  tooltip="Visa"><span class="selected"></span><i class="fab fa-cc-visa"></i></label>
+
+                      <input formControlName="creditCardType"
+                             name="creditCardType" (change)="specified($event)" class="connect-Radio" type="radio"  id="master" value=2 />
+                      <label for="master" class="connect-Label" tooltip="Master Card" ><span class="selected"></span><i class="fab fa-cc-mastercard"></i></label>
+                      </div>
+
+
+
+                    </div>
+      </div>
+      </div>
+            <div class="col-md-6">
+              <textarea formControlName="clientFromDetails"
+                        name="clientFromDetails" class="form-control" placeholder="Please specify in details"></textarea>
+              </div>
+          </div>
+              <div class="row" [ngClass]="{'hideCreditCardInformation ' :  !creditCard ,  'showCreditCardInformation ' :  creditCard  }">
+              <div class="col-md-5" [ngClass]="{'invalid':addForm.submitted && formGroup.addForm.cardNumber.errors}">
+                  <input class="form-control" type="tel" formControlName="cardNumber" autocomplete="cc-number" id="cardNum"   ccNum (change)="ValidateCreditCardNumber()">
+                </div>
+              <div class="col-md-2">
+                    <div class="input-group-append " [ngClass]="{'invalid':addForm.submitted && formGroup.addForm.creditCardExp.errors}">
+                        <input formControlName="creditCardExp" name="creditCardExp" placeholder="mm/yy" class="form-control" type="tel" type="tel" autocomplete="cc-exp" id="cc-exp" ccExp>
+
+                  </div>
+              </div>
+              <div class="col-md-2">
+              <div class="input-group-append" [ngClass]="{'invalid':addForm.submitted && formGroup.addForm.cardCvv.errors}">
+                                        <input formControlName="cardCvv" name="cardCvv" placeholder="cvc" class="form-control" type="tel" type="tel" autocomplete="cc-cvc" id="cardCvv" ccCvc>
+                                      </div>
+            </div>
+          </div>
+ <div class="d-flex flex-row justify-content-end align-items-end w-100">
+                <button class="btn-material btn mt-3 mb-5 "
+                [disabled]="(creditCard && addForm.controls['cardNumber'].invalid)
+                || addForm.controls['email'].invalid ||
+                addForm.controls['fName'].invalid ||
+                addForm.controls['password'].invalid"
+                (click)="staticModal.show(); onSubmit()">Submit</button>
+              </div>
+
+    </form>
+  </div>
+</div>
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-body">
+  <div class="p-5 text-center modal-content">
+
+    <p class="p-5">
+      <i class="fa fa-4x fa-spin fa fa-circle-o-notch fal spinner text-center p-3" style="color: #f18f46"></i><br>
+    Your Account has been created Successfuly <br>
+     Redirecting you to the LoginPage
+   </p>
+  </div>
+   </div>
+  </div>
+</div>
